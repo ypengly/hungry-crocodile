@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #08202c;
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #eef6f8;
+  touch-action: none;
+}
+
+#game-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: block;
+  z-index: 1;
+}
+
+#ui-root {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+.screen.active { display: flex; }
+
+.screen:not(.hud-screen):not(#screen-hud) {
+  background: radial-gradient(ellipse at center, rgba(10,40,55,0.85) 0%, rgba(4,18,26,0.96) 100%);
+  backdrop-filter: blur(2px);
+}
+
+.menu-panel {
+  background: linear-gradient(180deg, #0f3a4a 0%, #0a2733 100%);
+  border: 3px solid #1f6b7a;
+  border-radius: 22px;
+  padding: 32px 36px;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+  max-height: 88vh;
+  overflow-y: auto;
+}
+.menu-panel.wide-panel { max-width: 640px; }
+
+.game-title {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 2.4em;
+  color: #ffd95e;
+  text-shadow: 0 3px 0 #6b4a10, 0 6px 14px rgba(0,0,0,0.4);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.game-subtitle { color: #9fd6e0; margin-bottom: 22px; font-weight: 600; }
+
+.btn {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 1em;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 20px;
+  cursor: pointer;
+  color: #fff;
+  width: 100%;
+  margin-top: 10px;
+  transition: transform 0.08s ease, filter 0.15s ease;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.25), 0 6px 14px rgba(0,0,0,0.25);
+}
+.btn:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.25); }
+.btn-primary { background: linear-gradient(180deg, #4fd16c, #2ba84f); }
+.btn-secondary { background: linear-gradient(180deg, #2e7a94, #1c5568); }
+.btn-danger { background: linear-gradient(180deg, #e2554a, #a83228); }
+.btn-large { font-size: 1.4em; padding: 16px; margin-bottom: 6px; }
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+.menu-grid .btn { margin-top: 0; font-size: 0.85em; padding: 12px 8px; }
+
+.menu-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+  font-weight: 700;
+  color: #ffd95e;
+  padding: 0 6px;
+}
+.menu-hint { margin-top: 14px; font-size: 0.78em; color: #7fb8c4; }
+
+h2 { font-family: 'Baloo 2', sans-serif; color: #ffd95e; margin-bottom: 16px; font-size: 1.6em; }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+  max-height: 55vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.item-card {
+  background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 12px;
+  text-align: left;
+}
+.item-card.locked { opacity: 0.55; }
+.item-card.equipped { border-color: #4fd16c; }
+.item-card h4 { font-family: 'Baloo 2', sans-serif; color: #fff; margin-bottom: 4px; }
+.item-card p { font-size: 0.78em; color: #b9dbe2; margin-bottom: 8px; }
+.item-card .stat-line { display: flex; justify-content: space-between; font-size: 0.72em; color: #8fc7d2; margin-bottom: 2px; }
+.item-card .btn { padding: 8px; font-size: 0.85em; margin-top: 8px; }
+.croc-swatch { width: 100%; height: 46px; border-radius: 10px; margin-bottom: 8px; }
+
+.tab-row { display: flex; gap: 6px; margin-bottom: 12px; }
+.tab-btn {
+  flex: 1; padding: 8px; border-radius: 10px; border: none;
+  background: rgba(255,255,255,0.08); color: #cfe9ee; font-weight: 700; cursor: pointer;
+  font-family: 'Baloo 2', sans-serif; font-size: 0.85em;
+}
+.tab-btn.active { background: #2e7a94; color: #fff; }
+.shop-balance { margin-bottom: 10px; font-weight: 700; color: #ffd95e; }
+
+.list-column { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; max-height: 60vh; overflow-y: auto; }
+.list-item {
+  background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-align: left;
+}
+.list-item.done { border-color: #4fd16c; opacity: 0.7; }
+.list-item h4 { font-family: 'Baloo 2', sans-serif; color: #fff; font-size: 1em; margin-bottom: 4px; }
+.list-item p { font-size: 0.78em; color: #b9dbe2; }
+.list-item .bar-track { margin-top: 8px; height: 10px; }
+
+.setting-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-weight: 700; }
+.switch { position: relative; width: 46px; height: 26px; display: inline-block; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; inset: 0; background: #3a4a52; border-radius: 20px; cursor: pointer; transition: 0.2s; }
+.slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: 0.2s; }
+.switch input:checked + .slider { background: #4fd16c; }
+.switch input:checked + .slider::before { transform: translateX(20px); }
+.select-input { background: #12414f; color: #fff; border: 1px solid #2e7a94; border-radius: 8px; padding: 6px 10px; font-weight: 700; }
+
+.gameover-title { font-family: 'Baloo 2', sans-serif; color: #ff6b5e; font-size: 2em; text-shadow: 0 3px 0 #6b1810; }
+.gameover-croc { font-size: 3em; margin: 10px 0; }
+.gameover-score-label { color: #9fd6e0; font-weight: 700; letter-spacing: 2px; }
+.gameover-score { font-family: 'Baloo 2', sans-serif; font-size: 2.6em; color: #ffd95e; margin-bottom: 10px; }
+.gameover-stats { display: flex; justify-content: center; gap: 24px; font-weight: 700; margin-bottom: 6px; }
+
+.audio-unlock-overlay {
+  position: fixed; inset: 0; z-index: 999;
+  background: rgba(4,18,26,0.92);
+  color: #ffd95e; font-family: 'Baloo 2', sans-serif; font-size: 1.6em;
+  border: none; display: flex; align-items: center; justify-content: center;
+  pointer-events: auto; cursor: pointer;
+}
+.audio-unlock-overlay.hidden { display: none; }
